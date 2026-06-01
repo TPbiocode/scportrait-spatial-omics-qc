@@ -1,6 +1,8 @@
 # Morphology-aware Spatial Omics Quality Control using scPortrait
 
-## Project Overview
+## Overview
 Recent advances in imaging-based spatial transcriptomics technologies such as Xenium and Atera (10x Genomics) enable high-resolution mapping of gene expression within intact tissues at true subcellular locations. Despite these advantages, current quality control (QC) approaches for datasets Xenium and Atera platforms remain largely transcript-centric and often fail to capture image-derived morphological and subcellular artifacts. This limitation can hinder identification of technical artifacts, segmentation errors, and biologically relevant stress phenotypes that influence downstream analyses.
+
 This project aims to explore how subcellular morphological features extracted using scPortrait can enhance QC in spatial omics datasets. Publicly available Xenium and Atera datasets will be used as proof-of-concept examples to investigate how high-resolution imaging and scPortrait-based feature extraction can identify technical artifacts, evaluate segmentation quality, and distinguish biologically meaningful cellular states from low-quality observations.
+
 The study will focus on learning and applying computational approaches for morphology-aware spatial omics analysis, including the extraction of cellular and subcellular image features with scPortrait, integration of transcriptomic and imaging information, and evaluation of QC-related metrics. Particular emphasis will be placed on addressing two main questions: (1) whether subcellular and morphological features can improve the identification of quality issues in spatial omics datasets beyond conventional count-based QC methods, and (2) whether technical artifacts and biological stress states can be disentangled using subcellular spatial patterns.
