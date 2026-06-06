@@ -6,3 +6,12 @@ Recent advances in imaging-based spatial transcriptomics technologies such as Xe
 This project aims to explore how subcellular morphological features extracted using scPortrait can enhance QC in spatial omics datasets. Publicly available Xenium and Atera datasets will be used as proof-of-concept examples to investigate how high-resolution imaging and scPortrait-based feature extraction can identify technical artifacts, evaluate segmentation quality, and distinguish biologically meaningful cellular states from low-quality observations.
 
 The study will focus on learning and applying computational approaches for morphology-aware spatial omics analysis, including the extraction of cellular and subcellular image features with scPortrait, integration of transcriptomic and imaging information, and evaluation of QC-related metrics. Particular emphasis will be placed on addressing two main questions: (1) whether subcellular and morphological features can improve the identification of quality issues in spatial omics datasets beyond conventional count-based QC methods, and (2) whether technical artifacts and biological stress states can be disentangled using subcellular spatial patterns.
+
+## Repository Structure
+
+- `data/`      : Directory structure for raw, intermediate, processed, and external datasets. Large datasets are excluded from version control.
+- `notebooks/` : Exploratory analyses and visualizations
+- `workflow/`  : Reproducible pipeline steps for dataset processing and scPortrait workflow
+- `src/`       : Reusable Python modules and utility functions
+- `reports/`   : Configuration files for datasets, workflows, and compute environments
+- `configs/`   : Project documentation
