@@ -1,0 +1,21 @@
+---
+name: "Xenium breast cancer cropped project with scPortrait DAPI Cellpose segmentation"
+
+DAPISegmentationCellpose:
+    chunk_size: 50 # chunk size for chunked HDF5 storage. is needed for correct caching and high performance reading. should be left at 50.
+    nucleus_segmentation:
+        model: "nuclei"
+        flow_threshold: 0.6 # threshold for the flow error. If the flow error is above this threshold, the cell is not considered valid. (earlier on increasing from 0.4 to 0.6, masks increased to 3737 from 3601)
+        
+HDF5CellExtraction:
+    compression: True
+    threads: 8 # threads used in multithreading
+    image_size: 64 # image size in pixel
+    segmentation_mask: "seg_all_nucleus"
+    normalize_output: False
+    cache: "."
+
+CellFeaturizer:
+    batch_size: 900
+    dataloader_worker_number: 0 #needs to be 0 if using cpu
+    inference_device: "cpu"
