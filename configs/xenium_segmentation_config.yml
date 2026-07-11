@@ -1,0 +1,15 @@
+---
+name: "Xenium breast cancer cropped project"
+
+HDF5CellExtraction:
+    compression: True
+    threads: 8 # threads used in multithreading
+    image_size: 64 # image size in pixel
+    segmentation_mask: "seg_all_nucleus"
+    normalize_output: False
+    cache: "."
+
+CellFeaturizer:
+    batch_size: 900
+    dataloader_worker_number: 0 #needs to be 0 if using cpu
+    inference_device: "cpu"
