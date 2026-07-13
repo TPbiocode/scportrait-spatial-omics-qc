@@ -32,3 +32,13 @@ CellFeaturizer:
     batch_size: 900
     dataloader_worker_number: 0 #needs to be 0 if using cpu
     inference_device: "cpu"
+
+MLClusterClassifier:
+    channel_selection: 1
+    batch_size: 256
+    dataloader_worker_number: 0 #needs to be 0 if using cpu
+    encoders:
+    - forward
+    inference_device: "cpu"
+    label: Autophagy_15h_classifier2_1
+    network: autophagy_classifier
