@@ -42,3 +42,15 @@ MLClusterClassifier:
     inference_device: "cpu"
     label: Autophagy_15h_classifier2_1
     network: autophagy_classifier
+
+ConvNeXtFeaturizer:
+    # number of cells in a minibatch
+    batch_size: 16
+    # number of threads to use for dataloader
+    dataloader_worker_number: 0 #needs to be 0 if using cpu
+    # what device should be used for inference
+    inference_device: "cpu"
+    # how the results should be saved
+    label: "ConvNeXtFeaturizer"
+    # which channels to run inference on
+    channel_selection: 1
