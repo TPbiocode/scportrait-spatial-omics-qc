@@ -1,0 +1,51 @@
+---
+name: "Xenium breast cancer full dataset project with scPortrait DAPI segmentation"
+
+DAPISegmentation:
+    chunk_size: 50 # chunk size for chunked HDF5 storage. is needed for correct caching and high performance reading. should be left at 50.
+    lower_quantile_normalization:   0.001
+    upper_quantile_normalization:   0.999
+    median_filter_size:   2 # Size in pixels (reduced from 4 to 2 to improve performance and detect more nuclei than previous 3316 nuclei detected with 4)
+    nucleus_segmentation:
+        lower_quantile_normalization:   0.01 # quantile normalization of dapi channel before local tresholding. Strong normalization (0.05,0.95) can help with nuclear speckles.
+        upper_quantile_normalization:   0.99 # quantile normalization of dapi channel before local tresholding. Strong normalization (0.05,0.95) can help with nuclear speckles.
+        median_block: 31 # Size of pixel disk used for median, should be uneven (reduced from 41 to 31 to detect more nuclei)
+        median_step: 4
+        threshold: 0.1 # threshold above which nucleus is detected, if not specified a global threshold is calcualted using otsu (when min_distance was set to 5, only 2465 nucleus labels were present, so lower from 0.2 to 0.1 to detect dimly lit nucleus)
+        min_distance: 5 # minimum distance between two nucleis in pixel (value of 8 produced only 2422 nucleus labels, so its reduced to 5)
+        peak_footprint: 3 # controls the footprint used for detecting local maxima in the distance transform before watershed. A smaller footprint allows nearby nuclei to generate separate seeds, which can improve splitting of touching nuclei (value reduced from 7 to 5 to detect more nuclei; further reduced to 3 to detect as 3137 were detected when value was 5)
+        speckle_kernel: 9 # Erosion followed by Dilation to remove speckels, size in pixels, should be uneven
+        dilation: 0 # final dilation of pixel mask
+        min_size: 150 # minimum nucleus area in pixel
+        max_size: 5000 # maximum nucleus area in pixel
+        contact_filter: 0.3 # minimum nucleus contact with background (earlier was 0.5 with 3342 nuclei, but reduced to 0.3 to detect more nuclei)
+
+HDF5CellExtraction:
+    compression: True
+    threads: 1 # threads used in multithreading (150 GB RAM - gpu partition,750 GB RAM - smp partition i.e. symmetric multiprocessing partition)
+    image_size: 64 # image size in pixel
+    segmentation_mask: "seg_all_nucleus"
+    normalize_output: False
+    cache: "."
+    # Memory management
+    target_ram_utilization: 0.60
+    max_inflight_result_batches: 2 # maximum number of result batches that can be in memory at any given time. Changed from default to 20 then to 2
+    flush_every: 2 # number of result batches to flush to disk at a time. Changed from default to 20 then to 2
+    max_batch_size: 100 # reduced from default to 500 then to 100 to avoid OOM issues
+
+CellFeaturizer:
+    batch_size: 900
+    dataloader_worker_number: 0 #needs to be 0 if using cpu (use 8 later)
+    inference_device: "cpu"
+
+ConvNeXtFeaturizer:
+    # number of cells in a minibatch
+    batch_size: 256
+    # number of threads to use for dataloader
+    dataloader_worker_number: 8 # needs to be 0 if using cpu
+    # what device should be used for inference
+    inference_device: "cuda"
+    # how the results should be saved
+    label: "ConvNeXtFeaturizer"
+    # which channels to run inference on
+    channel_selection: 1
